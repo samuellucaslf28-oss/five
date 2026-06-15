@@ -151,6 +151,9 @@ inline static bool StealCarEnabled;
 inline static int GodModeKey;
 inline static int FixCar;
 inline static bool HornetBoost;
+inline static bool NoClipCarEnabled;
+inline static int NoClipCarKey;
+inline static float NoClipCarSpeed = 1.0f;
 } *Player;
 nlohmann::json ImColToJson( const ImColor & Col ) {
 return nlohmann::json::array( { Col.Value.x, Col.Value.y, Col.Value.z, Col.Value.w } );

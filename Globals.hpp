@@ -8,26 +8,27 @@
 #pragma comment( lib, "D3DX11.lib" )
 class cColors {
 public:
-ImVec4 Base = ImColor(255, 255, 255, 255);
-ImVec4 Tabs = ImColor(255, 255, 255, 255);
-ImVec4 PrimaryText = ImColor( 170, 170, 170 );
-ImVec4 SecundaryText = ImColor( 255, 255, 255 );
-ImVec4 FeaturesText = ImColor(170, 170, 170);
-ImVec4 SecundaryFeaturesText = ImColor(74, 74, 74);
-ImVec4 BorderCol = ImColor( 0, 0, 0, 0 );
-ImVec4 LinesCol = ImColor( 0, 0, 0, 0 );
+// Cyan accent (ZENITH style)
+ImVec4 Base = ImColor(0, 210, 255, 255);
+ImVec4 Tabs = ImColor(0, 210, 255, 255);
+ImVec4 PrimaryText = ImColor(200, 240, 255);
+ImVec4 SecundaryText = ImColor(140, 210, 230);
+ImVec4 FeaturesText = ImColor(200, 240, 255);
+ImVec4 SecundaryFeaturesText = ImColor(50, 80, 95);
+ImVec4 BorderCol = ImColor(0, 210, 255, 40);
+ImVec4 LinesCol = ImColor(0, 210, 255, 30);
 ImVec4 BackgroundCol = ImColor(0, 0, 0);
-ImVec4 ChildCol = ImColor( 0, 0, 0, 200 );
-ImVec4 ChildBorderCol = ImColor(0, 0, 0, 0);
+ImVec4 ChildCol = ImColor(6, 8, 10, 210);
+ImVec4 ChildBorderCol = ImColor(0, 210, 255, 18);
 ImVec4 Branco = ImColor(255, 255, 255);
-ImVec4 TitleBar = ImColor(0, 0, 0, 200);
-ImVec4 TitleBarBorder = ImColor(0, 0, 0, 0);
-ImVec4 SideBar = ImColor( 0, 0, 0, 200 );
-ImVec4 SideBarBorder = ImColor( 0, 0, 0, 0 );
-ImVec4 ButtonHovered = ImColor( 180, 180, 180, 100 );
-ImVec4 TestingTest = ImColor(180, 180, 180);
-ImVec4 InputBackground = ImColor( 36, 36, 42, 255 );
-ImVec4 InputBorder = ImColor( 46, 46, 52, 255 );
+ImVec4 TitleBar = ImColor(4, 5, 7, 230);
+ImVec4 TitleBarBorder = ImColor(0, 210, 255, 35);
+ImVec4 SideBar = ImColor(4, 5, 7, 230);
+ImVec4 SideBarBorder = ImColor(0, 210, 255, 40);
+ImVec4 ButtonHovered = ImColor(0, 210, 255, 60);
+ImVec4 TestingTest = ImColor(0, 210, 255);
+ImVec4 InputBackground = ImColor(8, 10, 14, 255);
+ImVec4 InputBorder = ImColor(0, 210, 255, 50);
 };
 inline cColors g_Col;
 class c_globals {

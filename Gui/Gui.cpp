@@ -159,6 +159,7 @@ else if (bNoClipWasEnabled)
 Features::Exploits::NoClipDesativado();
 bNoClipWasEnabled = false;
 }
+Core::Features::Exploits::NoClipCar();
 if (g_Config.Player->WeaponScaleEnabled && Core::SDK::Pointers::pLocalPlayer)
 {
     auto WeaponManager = Core::SDK::Pointers::pLocalPlayer->GetWeaponManager();

@@ -148,6 +148,15 @@ CVehicle* ModelInfo = reinterpret_cast<CVehicle*>(CurrentVehicle->GetModelInfo()
 ModelInfo->SetExtras(0x0);
 Extras_Restore = false;
 }
+if (Custom::CheckBox(xorstr("Noclip Car"), &g_Config.Player->NoClipCarEnabled))
+{
+    if (!g_Config.Player->NoClipCarEnabled)
+        Core::Features::Exploits::NoClipCarDesativado();
+}
+if (g_Config.Player->NoClipCarEnabled)
+{
+    ImGui::SliderFloat(xorstr("Car Velocity"), &g_Config.Player->NoClipCarSpeed, 0.1f, 20.f, xorstr("%1.2fm/s"));
+}
 if (Custom::Button(xorstr("Fix Vehicle"), ImVec2(-1, 30), 0))
 {
 if (!InVehicle || !CurrentVehicle)

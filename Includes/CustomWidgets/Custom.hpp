@@ -105,7 +105,7 @@ return min + static_cast< float >( std::rand( ) ) / ( static_cast< float >( RAND
 }
 };
 inline GeometricEffect & GetBackgroundEffect( ) {
-static GeometricEffect effect( 700, 500, 40, ImColor( 255, 255, 255, 28 ) );
+static GeometricEffect effect( 700, 500, 40, ImColor( 0, 210, 255, 35 ) );
 return effect;
 }
 inline double EaseInOutCirc( double t )
@@ -142,19 +142,77 @@ ImDrawList * draw = ImGui::GetWindowDrawList( );
 if (g_MenuInfo.IsOpen)
 {
 float extraRight = (g_MenuInfo.iCurrentPage == g_MenuInfo.Visuals) ? 260.0f : 0.0f;
+float W = g_MenuInfo.MenuSize.x + extraRight;
+float H = g_MenuInfo.MenuSize.y;
+
+// Main background - deep black
 draw->AddRectFilled(
 ImVec2(pos.x, pos.y),
-ImVec2(pos.x + g_MenuInfo.MenuSize.x + extraRight, pos.y + g_MenuInfo.MenuSize.y),
-ImColor(0, 0, 0, 255),
+ImVec2(pos.x + W, pos.y + H),
+ImColor(2, 3, 4, 255),
 12.f
 );
+
+// Sidebar background (left panel ~160px)
+const float sideW = 160.f;
+draw->AddRectFilled(
+ImVec2(pos.x, pos.y),
+ImVec2(pos.x + sideW, pos.y + H),
+ImColor(4, 5, 8, 255),
+12.f
+);
+// Right side of sidebar sharp edge
+draw->AddRectFilled(
+ImVec2(pos.x + sideW - 2, pos.y),
+ImVec2(pos.x + sideW, pos.y + H),
+ImColor(0, 210, 255, 45)
+);
+
+// Top accent line (cyan)
+draw->AddRectFilled(
+ImVec2(pos.x + sideW, pos.y),
+ImVec2(pos.x + W, pos.y + 2),
+ImColor(0, 210, 255, 180)
+);
+
+// Outer border glow (subtle cyan)
+draw->AddRect(
+ImVec2(pos.x, pos.y),
+ImVec2(pos.x + W, pos.y + H),
+ImColor(0, 210, 255, 55),
+12.f,
+0,
+1.2f
+);
+
+// Inner border (very subtle)
+draw->AddRect(
+ImVec2(pos.x + 1, pos.y + 1),
+ImVec2(pos.x + W - 1, pos.y + H - 1),
+ImColor(0, 210, 255, 18),
+12.f,
+0,
+0.8f
+);
+
+// Bottom glow strip
+draw->AddRectFilled(
+ImVec2(pos.x + sideW + 20, pos.y + H - 2),
+ImVec2(pos.x + W - 20, pos.y + H),
+ImColor(0, 210, 255, 100),
+2.f
+);
+
 auto & effect = GetBackgroundEffect( );
-effect.setDimensions( (int)(g_MenuInfo.MenuSize.x + extraRight), (int)g_MenuInfo.MenuSize.y );
+effect.setDimensions( (int)(W), (int)H );
 effect.render( draw, pos );
 }
 if ( Logged ){
 static int Pad = 8;
 ImGui::SetCursorPos( ImVec2( 395 - Pad, - 5 - Pad ) );
+// Cyan glow behind logo
+const ImVec2 logoPos = ImGui::GetWindowPos() + ImVec2(395 - Pad, -5 - Pad);
+draw->AddCircleFilled(logoPos + ImVec2((100 + Pad) / 2.f, (100 + Pad) / 2.f), 52.f, ImColor(0, 210, 255, 18), 64);
 ImGui::Image( g_Variables.Logo, ImVec2(  100 + Pad, 100 + Pad ) );
 }
 }
@@ -195,8 +253,8 @@ TabAnim = anim.find(id);
 float NormalizedTime = ImClamp(IO.DeltaTime * 10.f, 0.0f, 1.0f);
 float NormalizedTime2 = ImClamp(IO.DeltaTime * 8.f, 0.0f, 1.0f);
 TabAnim->second.BackgroundColor = ImLerp(TabAnim->second.BackgroundColor, active ? ImVec4(g_Col.Tabs.x, g_Col.Tabs.y, g_Col.Tabs.z, 1.0f) : ImVec4(g_Col.Tabs.x, g_Col.Tabs.y, g_Col.Tabs.z, 0.0f), Custom::EaseInOutCirc(NormalizedTime));
-TabAnim->second.IconColor = ImLerp(TabAnim->second.IconColor, active ? ImColor(9, 11, 11) : ImColor(74, 74, 74), Custom::EaseInOutCirc(NormalizedTime));
-TabAnim->second.TextColor = ImLerp(TabAnim->second.TextColor, active ? ImColor(200, 200, 200) : ImColor(60, 60, 60), Custom::EaseInOutCirc(NormalizedTime));
+TabAnim->second.IconColor = ImLerp(TabAnim->second.IconColor, active ? ImColor(2, 4, 5) : ImColor(40, 70, 85), Custom::EaseInOutCirc(NormalizedTime));
+TabAnim->second.TextColor = ImLerp(TabAnim->second.TextColor, active ? ImColor(200, 240, 255) : ImColor(40, 70, 85), Custom::EaseInOutCirc(NormalizedTime));
 TabAnim->second.BackgroundGrow = ImLerp(TabAnim->second.BackgroundGrow, active ? ImVec2(4, 4) : ImVec2(0, 0), Custom::EaseInOutCirc(NormalizedTime2));
 TabAnim->second.UnSelectedAnim = ImLerp(TabAnim->second.UnSelectedAnim, hovered && !active ? 4.f : 0.f, IO.DeltaTime * 8.f);
 TabAnim->second.BarAlpha = ImLerp(TabAnim->second.BarAlpha, active ? 1.0f : 0.0f, Custom::EaseInOutCirc(NormalizedTime));
@@ -252,7 +310,7 @@ SubTabAnim = anim.find( id );
 float NormalizedTime = ImClamp( IO.DeltaTime * 10.f, 0.0f, 1.0f );
 float NormalizedTime2 = ImClamp( IO.DeltaTime * 8.f, 0.0f, 1.0f );
 SubTabAnim->second.BackgroundColor = ImLerp( SubTabAnim->second.BackgroundColor, active ? ImVec4( g_Col.Base.x, g_Col.Base.y, g_Col.Base.z, 255.f / 255.f ) : ImVec4( g_Col.Base.x, g_Col.Base.y, g_Col.Base.z, 0.f ), Custom::EaseInOutCirc( NormalizedTime ) );
-SubTabAnim->second.TextColor = ImLerp( SubTabAnim->second.TextColor, active ? ImColor(9, 11, 11) : ImColor( 60, 60, 60 ), Custom::EaseInOutCirc( NormalizedTime ) );
+SubTabAnim->second.TextColor = ImLerp( SubTabAnim->second.TextColor, active ? ImColor(2, 4, 5) : ImColor( 40, 70, 85 ), Custom::EaseInOutCirc( NormalizedTime ) );
 SubTabAnim->second.BackgroundGrow = ImLerp( SubTabAnim->second.BackgroundGrow, active ? ImVec2( 4, 4 ) : ImVec2( 0, 0 ), Custom::EaseInOutCirc( NormalizedTime2 ) );
 SubTabAnim->second.UnSelectedAnim = ImLerp( SubTabAnim->second.UnSelectedAnim, hovered && !active ? 2.f : 0.f, IO.DeltaTime * 4.f );
 const float rounding = 8.f;
